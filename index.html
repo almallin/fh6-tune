@@ -369,16 +369,8 @@ body{
   <!-- ARBs -->
   <div id="tab-arb" class="tab-panel">
     <div class="sec">Anti-Roll Bars <span class="sec-tag">Mech. Balance 0.55–0.65</span></div>
-    <div class="range-pair">
-      <div class="fg"><label>Front Min</label><input type="number" step="0.1" id="arb-f-min" placeholder="min" oninput="calc()"></div>
-      <div class="fg"><label>Front Max</label><input type="number" step="0.1" id="arb-f-max" placeholder="max" oninput="calc()"></div>
-    </div>
-    <div class="res-row"><div><div class="res-label">Front ARB</div></div><div class="res-val empty" id="arb-f-res">—</div></div>
-    <div class="range-pair" style="margin-top:.5rem">
-      <div class="fg"><label>Rear Min</label><input type="number" step="0.1" id="arb-r-min" placeholder="min" oninput="calc()"></div>
-      <div class="fg"><label>Rear Max</label><input type="number" step="0.1" id="arb-r-max" placeholder="max" oninput="calc()"></div>
-    </div>
-    <div class="res-row"><div><div class="res-label">Rear ARB</div></div><div class="res-val empty" id="arb-r-res">—</div></div>
+    <div class="res-row"><div><div class="res-label">Front ARB</div><div class="res-sub">Fixed range 1–65</div></div><div class="res-val empty" id="arb-f-res">—</div></div>
+    <div class="res-row"><div><div class="res-label">Rear ARB</div><div class="res-sub">Fixed range 1–65</div></div><div class="res-val empty" id="arb-r-res">—</div></div>
     <p class="note"><b>Rule:</b> Fix the end with the problem. Understeer → soften front. Oversteer → soften rear.<br>After adjusting ARBs, compensate with springs in the opposite direction. Check Mech. Balance is 0.55–0.65.</p>
   </div>
 
@@ -412,27 +404,11 @@ body{
   <!-- DAMPING -->
   <div id="tab-damping" class="tab-panel">
     <div class="sec">Rebound <span class="sec-tag">Target 12–16</span></div>
-    <div class="range-pair">
-      <div class="fg"><label>Front Min</label><input type="number" step="0.1" id="rb-f-min" placeholder="min" oninput="calc()"></div>
-      <div class="fg"><label>Front Max</label><input type="number" step="0.1" id="rb-f-max" placeholder="max" oninput="calc()"></div>
-    </div>
-    <div class="res-row"><div><div class="res-label">Front Rebound</div></div><div class="res-val empty" id="rb-f-res">—</div></div>
-    <div class="range-pair" style="margin-top:.5rem">
-      <div class="fg"><label>Rear Min</label><input type="number" step="0.1" id="rb-r-min" placeholder="min" oninput="calc()"></div>
-      <div class="fg"><label>Rear Max</label><input type="number" step="0.1" id="rb-r-max" placeholder="max" oninput="calc()"></div>
-    </div>
-    <div class="res-row"><div><div class="res-label">Rear Rebound</div></div><div class="res-val empty" id="rb-r-res">—</div></div>
+    <div class="res-row"><div><div class="res-label">Front Rebound</div><div class="res-sub">Fixed range 1–20</div></div><div class="res-val empty" id="rb-f-res">—</div></div>
+    <div class="res-row"><div><div class="res-label">Rear Rebound</div><div class="res-sub">Fixed range 1–20</div></div><div class="res-val empty" id="rb-r-res">—</div></div>
     <div class="sec">Bump <span class="sec-tag">~40% of rebound</span></div>
-    <div class="range-pair">
-      <div class="fg"><label>Front Min</label><input type="number" step="0.1" id="bm-f-min" placeholder="min" oninput="calc()"></div>
-      <div class="fg"><label>Front Max</label><input type="number" step="0.1" id="bm-f-max" placeholder="max" oninput="calc()"></div>
-    </div>
-    <div class="res-row"><div><div class="res-label">Front Bump</div></div><div class="res-val empty" id="bm-f-res">—</div></div>
-    <div class="range-pair" style="margin-top:.5rem">
-      <div class="fg"><label>Rear Min</label><input type="number" step="0.1" id="bm-r-min" placeholder="min" oninput="calc()"></div>
-      <div class="fg"><label>Rear Max</label><input type="number" step="0.1" id="bm-r-max" placeholder="max" oninput="calc()"></div>
-    </div>
-    <div class="res-row"><div><div class="res-label">Rear Bump</div></div><div class="res-val empty" id="bm-r-res">—</div></div>
+    <div class="res-row"><div><div class="res-label">Front Bump</div><div class="res-sub">Fixed range 1–20</div></div><div class="res-val empty" id="bm-f-res">—</div></div>
+    <div class="res-row"><div><div class="res-label">Rear Bump</div><div class="res-sub">Fixed range 1–20</div></div><div class="res-val empty" id="bm-r-res">—</div></div>
     <p class="note"><b>Key rule:</b> Bump = ~40% of rebound. Rebound 12–16, bump ~5–6.<br>Softer springs = stiffer rebound. Stiffer springs = softer rebound.</p>
   </div>
 
@@ -645,12 +621,13 @@ function calc(){
   setRes('rh-r-res',valid(vn('rh-r-min'),vn('rh-r-max'))?vn('rh-r-min'):null,1);
 
   // DAMPING
+  // Damping fixed 1-20
   const rbFT=clamp(14+(fw-0.5)*2+(wf-0.5)*2,12,18);
   const rbRT=clamp(14+(rw-0.5)*2+(wf-0.5)*2,12,18);
-  setRes('rb-f-res',valid(vn('rb-f-min'),vn('rb-f-max'))?clamp(rbFT,vn('rb-f-min'),vn('rb-f-max')):null,1);
-  setRes('rb-r-res',valid(vn('rb-r-min'),vn('rb-r-max'))?clamp(rbRT,vn('rb-r-min'),vn('rb-r-max')):null,1);
-  setRes('bm-f-res',valid(vn('bm-f-min'),vn('bm-f-max'))?clamp(rbFT*0.40,vn('bm-f-min'),vn('bm-f-max')):null,1);
-  setRes('bm-r-res',valid(vn('bm-r-min'),vn('bm-r-max'))?clamp(rbRT*0.40,vn('bm-r-min'),vn('bm-r-max')):null,1);
+  setRes('rb-f-res',clamp(rbFT,1,20),1);
+  setRes('rb-r-res',clamp(rbRT,1,20),1);
+  setRes('bm-f-res',clamp(rbFT*0.40,1,20),1);
+  setRes('bm-r-res',clamp(rbRT*0.40,1,20),1);
 
   // AERO
   setRes('ae-f-res',valid(vn('ae-f-min'),vn('ae-f-max'))?fromMin(vn('ae-f-min'),vn('ae-f-max'),0.40):null,0);
@@ -673,9 +650,9 @@ function calc(){
 
 // GARAGE
 const FIELDS=['car-name','car-class','drivetrain','car-power','car-weight','weight-unit','tyre-compound','fw-slider',
-  'fd-min','fd-max','arb-f-min','arb-f-max','arb-r-min','arb-r-max',
+  'fd-min','fd-max',
   'sp-f-min','sp-f-max','sp-r-min','sp-r-max','rh-f-min','rh-f-max','rh-r-min','rh-r-max',
-  'rb-f-min','rb-f-max','rb-r-min','rb-r-max','bm-f-min','bm-f-max','bm-r-min','bm-r-max',
+  
   'ae-f-min','ae-f-max','ae-r-min','ae-r-max','df-ctr-min','df-ctr-max'];
 function readState(){const s={};FIELDS.forEach(id=>{const e=$(id);if(e)s[id]=e.value});return s}
 function applyState(s){FIELDS.forEach(id=>{const e=$(id);if(e&&s[id]!==undefined)e.value=s[id]});updateDiffTabs();setGearFocus(gearFocus);calc()}
